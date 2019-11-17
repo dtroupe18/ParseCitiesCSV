@@ -17,9 +17,12 @@ def load_csv_as_df(file_name, sub_directories, col_names=None):
     return pd.read_csv(full_path, header=0)
 
 
-column_names = ["city_ascii", "state_id", "zips", "id"]
+column_names = ["city_ascii", "state_id"]
 df = load_csv_as_df("uscities.csv", "", column_names)
+df['city_ascii'] = df['city_ascii'].str.replace(',', '') # remove any ','s in city names
+df['city_ascii'] = df['city_ascii'].str.lower()
+df['state_id'] = df['state_id'].str.lower()
 
 print(df.head())
-df.to_csv('US-Cities.csv', encoding='utf-8', index=False)
+df.to_csv('US-Cities-Clean.csv', encoding='utf-8', index=False)
 
